@@ -1,0 +1,3 @@
+../User/UserCode/UserCodeSrc/UserTimer.c:8:6:UserTimer_IncrementTimeCounter	1
+../User/UserCode/UserCodeSrc/UserTimer.c:15:10:UserTimer_GetTimeCounter	1
+../User/UserCode/UserCodeSrc/UserTimer.c:22:10:UserTimer_GetTimeCounterInMs	1
