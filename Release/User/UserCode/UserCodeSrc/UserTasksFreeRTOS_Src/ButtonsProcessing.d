@@ -1,6 +1,7 @@
-User/UserCode/UserCodeSrc/ButtonsProcessing.o: \
- ../User/UserCode/UserCodeSrc/ButtonsProcessing.c ../Core/Inc/gpio.h \
- ../Core/Inc/main.h ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
+User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/ButtonsProcessing.o: \
+ ../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/ButtonsProcessing.c \
+ ../Core/Inc/gpio.h ../Core/Inc/main.h \
+ ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h \
@@ -27,7 +28,7 @@ User/UserCode/UserCodeSrc/ButtonsProcessing.o: \
  ../Core/Inc/main.h \
  D:/stm32cubeide\ workspace/GameConsole/User/UserDrivers/UserDriversInc/ButtonsDriver.h \
  D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/UserTimer.h \
- D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/ButtonsProcessing.h \
+ D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/UserTasksFreeRTOS_Inc/ButtonsProcessing.h \
  D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/include/FreeRTOS.h \
  D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/config/FreeRTOSConfig.h \
  D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/include/projdefs.h \
@@ -66,7 +67,7 @@ User/UserCode/UserCodeSrc/ButtonsProcessing.o: \
 ../Core/Inc/main.h:
 D:/stm32cubeide\ workspace/GameConsole/User/UserDrivers/UserDriversInc/ButtonsDriver.h:
 D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/UserTimer.h:
-D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/ButtonsProcessing.h:
+D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/UserTasksFreeRTOS_Inc/ButtonsProcessing.h:
 D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/include/FreeRTOS.h:
 D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/config/FreeRTOSConfig.h:
 D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/include/projdefs.h:

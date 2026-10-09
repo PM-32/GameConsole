@@ -11,6 +11,7 @@
 ../FreeRTOS/source/tasks.c:4279:8:pcTaskGetName	0	static,ignoring_inline_asm
 ../FreeRTOS/source/tasks.c:4831:12:xTaskIncrementTick	40	static,ignoring_inline_asm
 ../FreeRTOS/source/tasks.c:4064:12:xTaskResumeAll	40	static,ignoring_inline_asm
+../FreeRTOS/source/tasks.c:2506:10:vTaskDelay	8	static,ignoring_inline_asm
 ../FreeRTOS/source/tasks.c:4707:12:xTaskCatchUpTicks	8	static,ignoring_inline_asm
 ../FreeRTOS/source/tasks.c:5215:10:vTaskSwitchContext	16	static,ignoring_inline_asm
 ../FreeRTOS/source/tasks.c:5402:6:vTaskPlaceOnEventList	8	static,ignoring_inline_asm

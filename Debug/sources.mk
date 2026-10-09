@@ -29,5 +29,6 @@ FreeRTOS/portable/GCC/ARM_CM3 \
 FreeRTOS/portable/MemMang \
 FreeRTOS/source \
 User/UserCode/UserCodeSrc \
+User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src \
 User/UserDrivers/UserDriversSrc \
 

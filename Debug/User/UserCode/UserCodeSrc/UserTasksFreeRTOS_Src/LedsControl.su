@@ -1,0 +1,4 @@
+../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:29:13:LedsControl_OnTransferComplete	16	static,ignoring_inline_asm
+../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:42:13:LedsControl_SetBaseColor	24	static
+../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:58:13:LedsControl_Task	24	static
+../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:99:12:LedsControl_CreateTask	24	static

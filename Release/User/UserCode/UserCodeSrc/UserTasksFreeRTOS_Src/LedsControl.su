@@ -1,0 +1,3 @@
+../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:58:13:LedsControl_Task	16	static
+../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:29:13:LedsControl_OnTransferComplete	16	static,ignoring_inline_asm
+../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:99:12:LedsControl_CreateTask	16	static

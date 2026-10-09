@@ -11,6 +11,7 @@
 ../FreeRTOS/source/tasks.c:4279:8:pcTaskGetName	3
 ../FreeRTOS/source/tasks.c:4831:12:xTaskIncrementTick	10
 ../FreeRTOS/source/tasks.c:4064:12:xTaskResumeAll	13
+../FreeRTOS/source/tasks.c:2506:10:vTaskDelay	4
 ../FreeRTOS/source/tasks.c:4707:12:xTaskCatchUpTicks	2
 ../FreeRTOS/source/tasks.c:5215:10:vTaskSwitchContext	9
 ../FreeRTOS/source/tasks.c:5402:6:vTaskPlaceOnEventList	2

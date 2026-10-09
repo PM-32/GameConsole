@@ -2,6 +2,7 @@
 ../FreeRTOS/source/tasks.c:1729:16:xTaskCreate	2
 ../FreeRTOS/source/tasks.c:1804:13:prvInitialiseNewTask	9
 ../FreeRTOS/source/tasks.c:2040:17:prvAddNewTaskToReadyList	7
+../FreeRTOS/source/tasks.c:2506:10:vTaskDelay	4
 ../FreeRTOS/source/tasks.c:3588:19:prvCreateIdleTasks	5
 ../FreeRTOS/source/tasks.c:3742:6:vTaskStartScheduler	4
 ../FreeRTOS/source/tasks.c:3847:6:vTaskEndScheduler	1

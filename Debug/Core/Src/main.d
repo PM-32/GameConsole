@@ -23,7 +23,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
- ../Core/Inc/tim.h ../Core/Inc/main.h ../Core/Inc/gpio.h \
+ ../Core/Inc/dma.h ../Core/Inc/main.h ../Core/Inc/tim.h \
+ ../Core/Inc/gpio.h \
  D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/include/FreeRTOS.h \
  D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/config/FreeRTOSConfig.h \
  D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/include/projdefs.h \
@@ -37,7 +38,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/UserTimer.h \
  D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/CommonFreeRTOS.h \
  D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/Hardware.h \
- D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/InterruptsPriorities.h
+ D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/InterruptsPriorities.h \
+ D:/stm32cubeide\ workspace/GameConsole/User/UserDrivers/UserDriversInc/LedsDriver.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -63,8 +65,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
-../Core/Inc/tim.h:
+../Core/Inc/dma.h:
 ../Core/Inc/main.h:
+../Core/Inc/tim.h:
 ../Core/Inc/gpio.h:
 D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/include/FreeRTOS.h:
 D:/stm32cubeide\ workspace/GameConsole/FreeRTOS/config/FreeRTOSConfig.h:
@@ -80,3 +83,4 @@ D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/UserTimer.h:
 D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/CommonFreeRTOS.h:
 D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/Hardware.h:
 D:/stm32cubeide\ workspace/GameConsole/User/UserCode/UserCodeInc/InterruptsPriorities.h:
+D:/stm32cubeide\ workspace/GameConsole/User/UserDrivers/UserDriversInc/LedsDriver.h:

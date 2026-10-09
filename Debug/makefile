@@ -10,6 +10,7 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include User/UserDrivers/UserDriversSrc/subdir.mk
+-include User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/subdir.mk
 -include User/UserCode/UserCodeSrc/subdir.mk
 -include FreeRTOS/source/subdir.mk
 -include FreeRTOS/portable/MemMang/subdir.mk
