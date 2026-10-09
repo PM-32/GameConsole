@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "tim.h"
 #include "gpio.h"
 
@@ -30,6 +31,7 @@
 #include "CommonFreeRTOS.h"
 #include "Hardware.h"
 #include "InterruptsPriorities.h"
+#include "LedsDriver.h"
 #include "UserTimer.h"
 /* USER CODE END Includes */
 
@@ -92,7 +94,9 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_TIM2_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 
   // Установка приоритетов прерываний
@@ -101,6 +105,9 @@ int main(void)
 
   // Запуск таймера для отсчета временных интервалов
   HAL_TIM_Base_Start_IT(&TIM_INTERVAL_HTIM);
+
+  // Инициализизация драйвера светодиодов WS2812B
+  LedsDriver_Init();
 
   // Статус создания задач FreeRTOS
   BaseType_t taskCreationResult = CommonFreeRTOS_CreateTasks();

@@ -1,0 +1,23 @@
+# Папки сборки STM32CubeIDE
+Debug/
+Release/
+
+# Настройки Eclipse
+.settings/
+
+# Файлы конфигурации запуска (локальные пути)
+*.launch
+
+# Объектные файлы и бинарники
+*.o
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+*.su
+
+# Прочее
+*.d
+*.cyclo
+*.tmp

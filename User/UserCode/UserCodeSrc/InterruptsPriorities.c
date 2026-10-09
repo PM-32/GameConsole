@@ -23,6 +23,12 @@
 //! Приоритет прерываний таймера 2
 #define TIM2_INTERRUPTS_PRIORITY            (INTERRUPT_PRIORITY_FREERTOS_MIN + 2)
 
+//! Приоритет прерываний таймера 4 (завершение передачи DMA WS2812B)
+#define TIM4_INTERRUPTS_PRIORITY            (INTERRUPT_PRIORITY_FREERTOS_MIN + 2)
+
+//! Приоритет прерываний DMA1 Channel 5 (завершение передачи DMA WS2812B)
+#define DMA1_CHANNEL5_INTERRUPTS_PRIORITY   (INTERRUPT_PRIORITY_FREERTOS_MIN + 2)
+
 //! \brief Установка приоритетов прерываний для корректной работы FreeRTOS
 void InterruptsPriorities_SetPriorities(void)
 {
@@ -32,4 +38,10 @@ void InterruptsPriorities_SetPriorities(void)
 
     // Установка приоритета прерываний таймера 2
     HAL_NVIC_SetPriority(TIM2_IRQn, TIM2_INTERRUPTS_PRIORITY, 0);
+
+    // Установка приоритета прерываний таймера 4
+    HAL_NVIC_SetPriority(TIM4_IRQn, TIM4_INTERRUPTS_PRIORITY, 0);
+
+    // Установка приоритета прерываний DMA1 Channel 5
+    HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, DMA1_CHANNEL5_INTERRUPTS_PRIORITY, 0);
 }
