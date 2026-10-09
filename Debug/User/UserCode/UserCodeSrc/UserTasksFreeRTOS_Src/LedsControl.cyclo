@@ -1,4 +1,0 @@
-../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:29:13:LedsControl_OnTransferComplete	3
-../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:42:13:LedsControl_SetBaseColor	2
-../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:58:13:LedsControl_Task	2
-../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/LedsControl.c:99:12:LedsControl_CreateTask	1

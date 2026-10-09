@@ -8,7 +8,7 @@
 #define LEDS_CONTROL_TASK_PRIORITY          (tskIDLE_PRIORITY + 1u)
 
 #define LEDS_CONTROL_TRANSFER_TIMEOUT_MS    300u    //!< Таймаут ожидания передачи DMA, мс
-#define LEDS_CONTROL_COLOR_UPDATE_MS        500u   //!< Период смены базового цвета, мс
+#define LEDS_CONTROL_COLOR_UPDATE_MS        500u    //!< Период смены базового цвета, мс
 #define LEDS_CONTROL_BRIGHTNESS_PERCENT     3u      //!< Яркость ленты для тестового режима, %
 
 //! \brief Таблица базовых цветов (R, G, B)

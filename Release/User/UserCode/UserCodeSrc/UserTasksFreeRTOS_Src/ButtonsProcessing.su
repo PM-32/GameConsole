@@ -1,3 +1,0 @@
-../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/ButtonsProcessing.c:22:13:ButtonsProcessing_Task	16	static
-../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/ButtonsProcessing.c:11:13:ButtonsDriver_OnEvent	16	static,ignoring_inline_asm
-../User/UserCode/UserCodeSrc/UserTasksFreeRTOS_Src/ButtonsProcessing.c:110:12:ButtonsProcessing_CreateTask	16	static
