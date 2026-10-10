@@ -67,6 +67,10 @@ void Error_Handler(void);
 #define Button7_GPIO_Port GPIOB
 #define Button8_Pin GPIO_PIN_15
 #define Button8_GPIO_Port GPIOB
+#define LargeBuzzer_Pin GPIO_PIN_8
+#define LargeBuzzer_GPIO_Port GPIOA
+#define SmallBuzzer_Pin GPIO_PIN_9
+#define SmallBuzzer_GPIO_Port GPIOA
 #define Button1_Pin GPIO_PIN_10
 #define Button1_GPIO_Port GPIOA
 #define Button2_Pin GPIO_PIN_11
