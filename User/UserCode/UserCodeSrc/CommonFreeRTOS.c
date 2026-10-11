@@ -1,4 +1,5 @@
 #include "ButtonsProcessing.h"
+#include "BuzzersControl.h"
 #include "CommonFreeRTOS.h"
 #include "LedsControl.h"
 
@@ -17,13 +18,23 @@ BaseType_t CommonFreeRTOS_CreateTasks(void)
         return pdFALSE;
     }
 
-    // Создание задачи управления светодиодами
-    tasksCreationStatus = LedsControl_CreateTask();
+    // TODO: Временно отключено
+//    // Создание задачи управления светодиодами
+//    tasksCreationStatus = LedsControl_CreateTask();
+//
+//    if (pdFALSE == tasksCreationStatus)
+//    {
+//        return pdFALSE;
+//    }
 
-    if (pdFALSE == tasksCreationStatus)
-    {
-        return pdFALSE;
-    }
+    // TODO: Временно отключено
+//    // Создание задачи тестирования зуммеров
+//    tasksCreationStatus = BuzzersControl_CreateTask();
+//
+//    if (pdFALSE == tasksCreationStatus)
+//    {
+//        return pdFALSE;
+//    }
 
     return tasksCreationStatus;
 }

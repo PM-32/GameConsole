@@ -28,6 +28,7 @@
 #include "task.h"
 
 #include "ButtonsDriver.h"
+#include "BuzzersDriver.h"
 #include "CommonFreeRTOS.h"
 #include "Hardware.h"
 #include "InterruptsPriorities.h"
@@ -97,6 +98,7 @@ int main(void)
   MX_DMA_Init();
   MX_TIM2_Init();
   MX_TIM4_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 
   // Установка приоритетов прерываний
@@ -108,6 +110,9 @@ int main(void)
 
   // Инициализизация драйвера светодиодов WS2812B
   LedsDriver_Init();
+
+  // Инициализация драйвера зуммеров
+  BuzzersDriver_Init();
 
   // Статус создания задач FreeRTOS
   BaseType_t taskCreationResult = CommonFreeRTOS_CreateTasks();
@@ -198,6 +203,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
     // Обработка нажатий на кнопку
 	ButtonsDriver_ProcessTick();
+
+    // Обработка тиков зуммеров
+    BuzzersDriver_ProcessTick();
   }
 
   /* USER CODE END Callback 0 */
