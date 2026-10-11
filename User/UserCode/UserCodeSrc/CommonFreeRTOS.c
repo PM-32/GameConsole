@@ -3,6 +3,7 @@
 #include "CommonFreeRTOS.h"
 #include "Lcd1602Control.h"
 #include "LedsControl.h"
+#include "LedsEffectsControl.h"
 
 //! \brief Создание задач FreeRTOS
 //! \return Статус создания задач FreeRTOS
@@ -20,7 +21,16 @@ BaseType_t CommonFreeRTOS_CreateTasks(void)
     }
 
     // TODO: Временно отключено
-    // Создание задачи управления LCD1602
+    // Создание задачи тестирования световых эффектов
+//    tasksCreationStatus = LedsEffectsControl_CreateTask();
+//
+//    if (pdFALSE == tasksCreationStatus)
+//    {
+//        return pdFALSE;
+//    }
+
+    // TODO: Временно отключено
+//    // Создание задачи управления LCD1602
 //    tasksCreationStatus = Lcd1602Control_CreateTask();
 //
 //    if (pdFALSE == tasksCreationStatus)
@@ -29,7 +39,7 @@ BaseType_t CommonFreeRTOS_CreateTasks(void)
 //    }
 
     // TODO: Временно отключено
-    // Создание задачи управления светодиодами
+//    // Создание задачи управления светодиодами
 //    tasksCreationStatus = LedsControl_CreateTask();
 //
 //    if (pdFALSE == tasksCreationStatus)

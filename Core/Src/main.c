@@ -35,6 +35,7 @@
 #include "InterruptsPriorities.h"
 #include "Lcd1602Driver.h"
 #include "LedsDriver.h"
+#include "LedsEffects.h"
 #include "UserTimer.h"
 /* USER CODE END Includes */
 
@@ -113,6 +114,9 @@ int main(void)
 
   // Инициализизация драйвера светодиодов WS2812B
   LedsDriver_Init();
+
+  // Инициализация модуля световых эффектов
+  LedsEffects_Init();
 
   // Инициализация драйвера зуммеров
   BuzzersDriver_Init();
