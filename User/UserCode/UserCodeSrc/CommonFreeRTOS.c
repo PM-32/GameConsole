@@ -18,6 +18,7 @@ BaseType_t CommonFreeRTOS_CreateTasks(void)
         return pdFALSE;
     }
 
+    // TODO: Временно отключено
 //    // Создание задачи управления светодиодами
 //    tasksCreationStatus = LedsControl_CreateTask();
 //
@@ -26,13 +27,14 @@ BaseType_t CommonFreeRTOS_CreateTasks(void)
 //        return pdFALSE;
 //    }
 
-    // Создание задачи тестирования зуммеров
-    tasksCreationStatus = BuzzersControl_CreateTask();
-
-    if (pdFALSE == tasksCreationStatus)
-    {
-        return pdFALSE;
-    }
+    // TODO: Временно отключено
+//    // Создание задачи тестирования зуммеров
+//    tasksCreationStatus = BuzzersControl_CreateTask();
+//
+//    if (pdFALSE == tasksCreationStatus)
+//    {
+//        return pdFALSE;
+//    }
 
     return tasksCreationStatus;
 }

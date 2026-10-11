@@ -9,7 +9,7 @@ extern "C"
 #include "FreeRTOS.h"
 #include "task.h"
 
-//! \brief Создание задачи тестирования зуммеров (F-28)
+//! \brief Создание задачи тестирования зуммеров
 //! \return Результат (статус) создания задачи
 BaseType_t BuzzersControl_CreateTask(void);
 

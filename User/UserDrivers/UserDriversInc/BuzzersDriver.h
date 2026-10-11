@@ -12,7 +12,7 @@ extern "C"
 #define BUZZERS_QUANTITY              2u
 
 //! Громкость по умолчанию, %
-#define BUZZER_DEFAULT_VOLUME         5u
+#define BUZZER_DEFAULT_VOLUME         2u
 
 //! Минимальная поддерживаемая частота, Гц
 #define BUZZER_MIN_FREQUENCY_HZ       100u

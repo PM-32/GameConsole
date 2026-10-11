@@ -10,16 +10,16 @@
 //! Приоритет задачи тестирования зуммеров
 #define BUZZERS_CONTROL_TASK_PRIORITY       (tskIDLE_PRIORITY + 1u)
 
-//! Пауза между воспроизведениями, мс (F-28: 5 секунд)
+//! Пауза между воспроизведениями, мс
 #define BUZZERS_CONTROL_PAUSE_MS            5000u
 
-//! Громкость большого зуммера в третьей фазе, %
-#define BUZZERS_CONTROL_LARGE_VOLUME_PHASE3 5u
+//! Громкость большого зуммера при совместном воспроизведении, %
+#define BUZZERS_CONTROL_LARGE_VOLUME_UNISON 2u
 
-//! Громкость маленького зуммера в третьей фазе, %
-#define BUZZERS_CONTROL_SMALL_VOLUME_PHASE3 10u
+//! Громкость маленького зуммера при совместном воспроизведении, %
+#define BUZZERS_CONTROL_SMALL_VOLUME_UNISON 4u
 
-//! Полная длительность мелодии (20 нот), мс.
+//! Длительность мелодии, мс.
 //! Ноты 1–15: 200 мс × 15 = 3000 мс.
 //! Нота 16: 400 мс.
 //! Ноты 17–19: 200 мс × 3 = 600 мс.
@@ -27,9 +27,8 @@
 //! Итого: 3000 + 400 + 600 + 400 = 4400 мс.
 #define BUZZERS_CONTROL_MELODY_DURATION_MS  4400u
 
-//! Полная мелодия (играет большой во всех фазах; маленький — только
-//! в фазах 2 и 3, но с фрагментами пауз в фазе 3).
-//! Мелодия на основе «Оды к радости» (Бетховен), 20 нот.
+//! Мелодия, исполняемая большим зуммером (20 нот).
+//! Мелодия на основе «Оды к радости» (Бетховен).
 static const BuzzerNote buzzersControlFullMelody[] =
 {
     { 523u, 200u },  //!< 1:  C5
@@ -54,14 +53,14 @@ static const BuzzerNote buzzersControlFullMelody[] =
     { 523u, 400u }   //!< 20: C5 (длинная)
 };
 
-//! Количество нот в полной мелодии
+//! Количество нот в мелодии большого зуммера
 #define BUZZERS_CONTROL_FULL_MELODY_NOTES_COUNT \
     ((uint16_t)(sizeof(buzzersControlFullMelody) / sizeof(buzzersControlFullMelody[0])))
 
-//! Мелодия для маленького зуммера в третьей фазе.
-//! Маленький играет в унисон с большим на фрагментах 2 и 4 (ноты 5–8
-//! и 13–16), на фрагментах 1, 3, 5 — пауза. Ритм совпадает с полной
-//! мелодией позиция-в-позицию, поэтому ProcessTick двигает обе мелодии
+//! Мелодия для маленького зуммера при совместном воспроизведении.
+//! Маленький звучит в унисон с большим на нотах 5–8 и 13–16,
+//! на остальных — пауза. Ритм совпадает с полной мелодией
+//! позиция-в-позицию, поэтому ProcessTick двигает обе мелодии
 //! синхронно. ARR общий, но у пауз ARR не меняется — конфликта нет.
 static const BuzzerNote buzzersControlSmallMelody[] =
 {
@@ -91,14 +90,13 @@ static const BuzzerNote buzzersControlSmallMelody[] =
 #define BUZZERS_CONTROL_SMALL_MELODY_NOTES_COUNT \
     ((uint16_t)(sizeof(buzzersControlSmallMelody) / sizeof(buzzersControlSmallMelody[0])))
 
-//! \brief Задача тестирования зуммеров (F-28)
-//! \details Бесконечный цикл из трёх фаз:
+//! \brief Задача тестирования зуммеров
+//! \details Бесконечный цикл:
 //!          1) мелодия на большом зуммере,
 //!          2) та же мелодия на маленьком зуммере,
 //!          3) большой играет полную мелодию, маленький подыгрывает
-//!             в унисон на фрагментах 2 и 4 (громкость маленького выше,
-//!             чем у большого).
-//!          Между фазами — пауза BUZZERS_CONTROL_PAUSE_MS.
+//!             в унисон на отдельных нотах (громкость маленького выше).
+//!          Между воспроизведениями — пауза BUZZERS_CONTROL_PAUSE_MS.
 //!          Задача не использует callback мелодии — ожидание построено
 //!          на vTaskDelay с фиксированной длительностью мелодии.
 //! \param[in] pvParameters Параметры задачи (не используются)
@@ -108,7 +106,7 @@ static void BuzzersControl_Task(void *pvParameters)
 
     for (;;)
     {
-        // Фаза 1: мелодия на большом зуммере (громкость по умолчанию)
+        // Мелодия на большом зуммере (громкость по умолчанию)
         BuzzersDriver_SetVolume(BUZZER_LARGE, BUZZER_DEFAULT_VOLUME);
         BuzzersDriver_SetVolume(BUZZER_SMALL, BUZZER_DEFAULT_VOLUME);
 
@@ -117,7 +115,7 @@ static void BuzzersControl_Task(void *pvParameters)
         vTaskDelay(pdMS_TO_TICKS(BUZZERS_CONTROL_MELODY_DURATION_MS));
         vTaskDelay(pdMS_TO_TICKS(BUZZERS_CONTROL_PAUSE_MS));
 
-        // Фаза 2: та же мелодия на маленьком зуммере (громкость по умолчанию)
+        // Та же мелодия на маленьком зуммере (громкость по умолчанию)
         BuzzersDriver_SetVolume(BUZZER_LARGE, BUZZER_DEFAULT_VOLUME);
         BuzzersDriver_SetVolume(BUZZER_SMALL, BUZZER_DEFAULT_VOLUME);
 
@@ -126,10 +124,11 @@ static void BuzzersControl_Task(void *pvParameters)
         vTaskDelay(pdMS_TO_TICKS(BUZZERS_CONTROL_MELODY_DURATION_MS));
         vTaskDelay(pdMS_TO_TICKS(BUZZERS_CONTROL_PAUSE_MS));
 
-        // Фаза 3: большой играет полную мелодию, маленький подыгрывает
-        // в унисон на фрагментах 2 и 4. Громкость маленького выше.
-        BuzzersDriver_SetVolume(BUZZER_LARGE, BUZZERS_CONTROL_LARGE_VOLUME_PHASE3);
-        BuzzersDriver_SetVolume(BUZZER_SMALL, BUZZERS_CONTROL_SMALL_VOLUME_PHASE3);
+        // Совместное воспроизведение: большой играет полную мелодию,
+        // маленький подыгрывает в унисон на отдельных нотах.
+        // Громкость маленького выше.
+        BuzzersDriver_SetVolume(BUZZER_LARGE, BUZZERS_CONTROL_LARGE_VOLUME_UNISON);
+        BuzzersDriver_SetVolume(BUZZER_SMALL, BUZZERS_CONTROL_SMALL_VOLUME_UNISON);
 
         BuzzersDriver_PlayMelody(BUZZER_LARGE, buzzersControlFullMelody,
                                  BUZZERS_CONTROL_FULL_MELODY_NOTES_COUNT);
@@ -141,7 +140,7 @@ static void BuzzersControl_Task(void *pvParameters)
     }
 }
 
-//! \brief Создание задачи тестирования зуммеров (F-28)
+//! \brief Создание задачи тестирования зуммеров
 //! \return Результат (статус) создания задачи
 BaseType_t BuzzersControl_CreateTask(void)
 {
