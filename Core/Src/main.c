@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "dma.h"
+#include "i2c.h"
 #include "tim.h"
 #include "gpio.h"
 
@@ -32,6 +33,7 @@
 #include "CommonFreeRTOS.h"
 #include "Hardware.h"
 #include "InterruptsPriorities.h"
+#include "Lcd1602Driver.h"
 #include "LedsDriver.h"
 #include "UserTimer.h"
 /* USER CODE END Includes */
@@ -99,6 +101,7 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM4_Init();
   MX_TIM1_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
   // Установка приоритетов прерываний
@@ -113,6 +116,15 @@ int main(void)
 
   // Инициализация драйвера зуммеров
   BuzzersDriver_Init();
+
+  // Инициализация драйвера LCD1602
+  if (Lcd1602Driver_Init() != LCD1602_OK)
+  {
+      while (1)
+      {
+          // Критическая ошибка. Не удалось инициализировать LCD1602
+      }
+  }
 
   // Статус создания задач FreeRTOS
   BaseType_t taskCreationResult = CommonFreeRTOS_CreateTasks();

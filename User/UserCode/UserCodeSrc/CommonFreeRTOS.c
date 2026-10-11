@@ -1,6 +1,7 @@
 #include "ButtonsProcessing.h"
 #include "BuzzersControl.h"
 #include "CommonFreeRTOS.h"
+#include "Lcd1602Control.h"
 #include "LedsControl.h"
 
 //! \brief Создание задач FreeRTOS
@@ -19,7 +20,16 @@ BaseType_t CommonFreeRTOS_CreateTasks(void)
     }
 
     // TODO: Временно отключено
-//    // Создание задачи управления светодиодами
+    // Создание задачи управления LCD1602
+//    tasksCreationStatus = Lcd1602Control_CreateTask();
+//
+//    if (pdFALSE == tasksCreationStatus)
+//    {
+//        return pdFALSE;
+//    }
+
+    // TODO: Временно отключено
+    // Создание задачи управления светодиодами
 //    tasksCreationStatus = LedsControl_CreateTask();
 //
 //    if (pdFALSE == tasksCreationStatus)
