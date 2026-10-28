@@ -16,10 +16,10 @@
 //! \brief Элемент таблицы маппинга частоты в цвет
 typedef struct
 {
-    uint16_t frequencyHz;
-    uint8_t  red;
-    uint8_t  green;
-    uint8_t  blue;
+    uint16_t frequencyHz;   //!< Частота ноты, Гц
+    uint8_t  red;           //!< Красная компонента
+    uint8_t  green;         //!< Зелёная компонента
+    uint8_t  blue;          //!< Синяя компонента
 } FrequencyColorEntry;
 
 //! Таблица маппинга частот в цвета (C4–B5, без интерполяции)
@@ -67,6 +67,7 @@ void SyncPeriphery_FrequencyToColor(uint16_t frequencyHz,
         return;
     }
 
+    // Поиск ближайшей частоты с допуском
     uint8_t  found = 0u;
     uint32_t bestDiff = 0xFFFFFFFFu;
     uint8_t  bestIndex = 0u;
@@ -99,6 +100,7 @@ void SyncPeriphery_FrequencyToColor(uint16_t frequencyHz,
         }
     }
 
+    // Если ближайшая частота в пределах допуска — используем её цвет
     if ((0u != found) && (bestDiff <= SYNC_PERIPHERY_FREQ_TOLERANCE_HZ))
     {
         *pRed   = frequencyColorMap[bestIndex].red;
@@ -108,6 +110,7 @@ void SyncPeriphery_FrequencyToColor(uint16_t frequencyHz,
         return;
     }
 
+    // Частота вне диапазона — белый
     *pRed   = MAX_COMPONENT_VALUE;
     *pGreen = MAX_COMPONENT_VALUE;
     *pBlue  = MAX_COMPONENT_VALUE;
@@ -157,6 +160,7 @@ void SyncPeriphery_StopAllFlashes(void)
             flashes[index].remainingMs = 0u;
             flashes[index].totalMs     = 0u;
 
+            // Гашение LED, на котором была активная вспышка
             LedsDriver_SetColor(index, 0u, 0u, 0u);
         }
     }
@@ -218,14 +222,15 @@ void SyncPeriphery_Update(void)
 
         if (0u == pFlash->remainingMs)
         {
+            // Вспышка завершена — гасим LED
             pFlash->active = 0u;
             LedsDriver_SetColor(ledIndex, 0u, 0u, 0u);
 
             continue;
         }
 
-        // Защита от деления на ноль (на случай прямого вызова StartFlash
-        // с durationMs = 0, что сейчас запрещено, но защита не помешает).
+        // Плавное затухание: яркость = remainingMs * 255 / totalMs
+        // Защита от деления на ноль на случай некорректного состояния
         if (pFlash->totalMs > 0u)
         {
             uint32_t brightness = ((uint32_t)pFlash->remainingMs * MAX_COMPONENT_VALUE) / pFlash->totalMs;
@@ -240,10 +245,6 @@ void SyncPeriphery_Update(void)
 }
 
 //! \brief Отклик «клик» (кнопка нажата)
-//! \note Устанавливает громкость клика в SYNC_PERIPHERY_CLICK_VOLUME_PERCENT
-//!       и НЕ восстанавливает её после окончания тона. Это глобальное
-//!       состояние маленького зуммера. При интеграции в игры — либо
-//!       убрать SetVolume, либо явно управлять громкостью из игры.
 void SyncPeriphery_Click(void)
 {
     if (0u == initialized)
@@ -276,6 +277,7 @@ void SyncPeriphery_PlayNote(Buzzer buzzer, uint16_t frequencyHz, uint16_t durati
 
     BuzzersDriver_PlayTone(buzzer, frequencyHz, durationMs);
 
+    // Пауза — свет не запускаем
     if (0u == frequencyHz)
     {
         return;
@@ -302,6 +304,8 @@ void SyncPeriphery_StopNote(Buzzer buzzer)
     }
 
     BuzzersDriver_Stop(buzzer);
+
+    // Свет: ничего. Вспышка затухает сама через Update.
 }
 
 //! \brief Отклик «успех»
@@ -382,6 +386,8 @@ void SyncPeriphery_Miss(void)
     {
         return;
     }
+
+    // Звук: тишина
 
     for (uint8_t ledIndex = 0u; ledIndex < LEDS_QUANTITY; ledIndex++)
     {
