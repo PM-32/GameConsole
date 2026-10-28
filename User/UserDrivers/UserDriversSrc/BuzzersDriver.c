@@ -25,6 +25,11 @@
 //! Значение CCR для тишины
 #define BUZZER_CCR_SILENCE               0u
 
+//! Начальное значение ARR таймера зуммеров (≈ 2 кГц).
+//! Короткий первый период нужен, чтобы первое UPDATE-событие
+//! произошло быстро, а не через 65 мс (при ARR = 0xFFFF).
+#define BUZZER_DEFAULT_ARR              499u
+
 //! \brief Контекст одного зуммера
 typedef struct
 {
@@ -184,11 +189,23 @@ static void BuzzersDriver_ApplyFrequency(Buzzer buzzer, uint16_t frequencyHz)
         return;
     }
 
+    // Принудительное применение новых ARR/CCR немедленно.
+    // Без этого первое UPDATE-событие может наступить позже окончания
+    // короткого тона, и звук потеряется (см. N-08, Auto-Reload Preload).
+
+    // 1. Обнуляем ARR и генерируем UPDATE — счётчик сбрасывается.
+    __HAL_TIM_SET_AUTORELOAD(&TIM_BUZZERS_HTIM, 0u);
+    HAL_TIM_GenerateEvent(&TIM_BUZZERS_HTIM, TIM_EVENTSOURCE_UPDATE);
+
+    // 2. Устанавливаем целевые ARR и CCR.
     BuzzersDriver_SetArr(arr);
 
     uint16_t ccr = BuzzersDriver_CalculateCcr(arr, buzzerContexts[buzzer].volumePercent);
 
     BuzzersDriver_SetCcr(buzzer, ccr);
+
+    // 3. Второй UPDATE — применяем целевые значения немедленно.
+    HAL_TIM_GenerateEvent(&TIM_BUZZERS_HTIM, TIM_EVENTSOURCE_UPDATE);
 }
 
 //! \brief Сбросить состояние мелодии
@@ -271,7 +288,7 @@ void BuzzersDriver_Init(void)
     }
 
     __HAL_TIM_SET_PRESCALER(&TIM_BUZZERS_HTIM, BUZZER_TIMER_PRESCALER);
-    __HAL_TIM_SET_AUTORELOAD(&TIM_BUZZERS_HTIM, 0xFFFFu);
+    __HAL_TIM_SET_AUTORELOAD(&TIM_BUZZERS_HTIM, BUZZER_DEFAULT_ARR);
     __HAL_TIM_SET_COUNTER(&TIM_BUZZERS_HTIM, 0u);
 
     BuzzersDriver_SetCcr(BUZZER_LARGE, BUZZER_CCR_SILENCE);

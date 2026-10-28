@@ -36,6 +36,7 @@
 #include "Lcd1602Driver.h"
 #include "LedsDriver.h"
 #include "LedsEffects.h"
+#include "SyncPeriphery.h"
 #include "UserTimer.h"
 /* USER CODE END Includes */
 
@@ -120,6 +121,12 @@ int main(void)
 
   // Инициализация драйвера зуммеров
   BuzzersDriver_Init();
+
+  // Инициализация драйвера кнопок
+  ButtonsDriver_Init();
+
+  // Инициализация модуля синхронных откликов
+  SyncPeriphery_Init();
 
   // Инициализация драйвера LCD1602
   if (Lcd1602Driver_Init() != LCD1602_OK)

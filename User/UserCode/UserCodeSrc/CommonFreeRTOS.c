@@ -4,6 +4,7 @@
 #include "Lcd1602Control.h"
 #include "LedsControl.h"
 #include "LedsEffectsControl.h"
+#include "SyncPeripheryControl.h"
 
 //! \brief Создание задач FreeRTOS
 //! \return Статус создания задач FreeRTOS
@@ -13,12 +14,12 @@ BaseType_t CommonFreeRTOS_CreateTasks(void)
     BaseType_t tasksCreationStatus = pdFALSE;
 
     // Создание задачи обработки кнопок
-    tasksCreationStatus = ButtonsProcessing_CreateTask();
-
-    if (pdFALSE == tasksCreationStatus)
-    {
-        return pdFALSE;
-    }
+//    tasksCreationStatus = ButtonsProcessing_CreateTask();
+//
+//    if (pdFALSE == tasksCreationStatus)
+//    {
+//        return pdFALSE;
+//    }
 
     // TODO: Временно отключено
     // Создание задачи тестирования световых эффектов
@@ -55,6 +56,14 @@ BaseType_t CommonFreeRTOS_CreateTasks(void)
 //    {
 //        return pdFALSE;
 //    }
+
+    // Создание задачи тестирования SyncPeriphery
+    tasksCreationStatus = SyncPeripheryControl_CreateTask();
+
+    if (pdPASS != tasksCreationStatus)
+    {
+        return pdFALSE;
+    }
 
     return tasksCreationStatus;
 }

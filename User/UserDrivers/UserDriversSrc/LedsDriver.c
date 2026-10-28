@@ -395,6 +395,11 @@ void LedsDriver_SetRainbow(uint8_t offset)
 //! \details Вызывается из SystemCallbacks.c при завершении генерации ШИМ.
 void LedsDriver_TransferCompleteCallback(void)
 {
+    // Принудительно останавливаем ШИМ и DMA, чтобы таймер TIM4
+    // не генерировал сигнал после окончания кадра.
+    // Это гарантирует, что на DIN будет низкий уровень до следующего кадра.
+    HAL_TIM_PWM_Stop_DMA(&TIM_PWM_GENERATION_HTIM, TIM_PWM_GENERATION_CHANNEL);
+
     transferInProgress = 0;
 
     if (pTransferCompleteCallback != NULL)
