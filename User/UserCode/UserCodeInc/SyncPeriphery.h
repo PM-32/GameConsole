@@ -81,10 +81,17 @@ extern "C"
 #define SYNC_PERIPHERY_HIT_FREQUENCY_HZ     2000u
 
 //! Громкость клика, %
-#define SYNC_PERIPHERY_CLICK_VOLUME_PERCENT   30u
+//! \note SyncPeriphery_Click устанавливает громкость и НЕ восстанавливает.
+//!       В тестовом режиме это сделано для слышимости клика.
+//!       При интеграции в игры — либо убрать SetVolume из Click,
+//!       либо явно выставлять громкость в игре перед PlayNote/Hit.
+#define SYNC_PERIPHERY_CLICK_VOLUME_PERCENT 30u
 
 //! Длительность клика, мс
-#define SYNC_PERIPHERY_CLICK_DURATION_MS      30u
+#define SYNC_PERIPHERY_CLICK_DURATION_MS    30u
+
+//! Частота клика, Гц
+#define SYNC_PERIPHERY_CLICK_FREQUENCY_HZ   2000u
 
 //! \brief Состояние одной вспышки
 typedef struct
@@ -98,34 +105,18 @@ typedef struct
 } SyncPeripheryFlash;
 
 //! \brief Инициализация модуля SyncPeriphery
-//! \note Идемпотентна. После инициализации нет активных вспышек.
-//! \note Перед вызовом SyncPeriphery_Init() должны быть вызваны:
-//!       - LedsDriver_Init()
-//!       - LedsEffects_Init()
-//!       - BuzzersDriver_Init()
 void SyncPeriphery_Init(void);
 
 //! \brief Обновление состояния вспышек
-//! \note Неблокирующая. Декрементирует remainingMs, пересчитывает яркость,
-//!       вызывает LedsDriver_SetColor() для активных вспышек.
-//!       НЕ вызывает LedsDriver_Show().
-//! \note Порядок вызова в задаче-владельце LED:
-//!       LedsEffects_Update() → SyncPeriphery_Update() → LedsDriver_Show().
 void SyncPeriphery_Update(void);
 
 //! \brief Отклик «клик» (кнопка нажата)
-//! \note Звук: BuzzersDriver_Click(BUZZER_SMALL).
-//!       Свет: вспышка всех LED белым (200 мс).
 void SyncPeriphery_Click(void);
 
 //! \brief Отклик «нота»
-//! \param[in] buzzer Идентификатор зуммера
-//! \param[in] frequencyHz Частота ноты, Гц (0 = пауза, свет не запускается)
-//! \param[in] durationMs Длительность ноты, мс
 void SyncPeriphery_PlayNote(Buzzer buzzer, uint16_t frequencyHz, uint16_t durationMs);
 
 //! \brief Остановка ноты
-//! \param[in] buzzer Идентификатор зуммера
 void SyncPeriphery_StopNote(Buzzer buzzer);
 
 //! \brief Отклик «успех»

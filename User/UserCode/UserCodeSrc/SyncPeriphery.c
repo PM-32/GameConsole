@@ -16,10 +16,10 @@
 //! \brief Элемент таблицы маппинга частоты в цвет
 typedef struct
 {
-    uint16_t frequencyHz;   //!< Частота ноты, Гц
-    uint8_t  red;           //!< Красная компонента
-    uint8_t  green;         //!< Зелёная компонента
-    uint8_t  blue;          //!< Синяя компонента
+    uint16_t frequencyHz;
+    uint8_t  red;
+    uint8_t  green;
+    uint8_t  blue;
 } FrequencyColorEntry;
 
 //! Таблица маппинга частот в цвета (C4–B5, без интерполяции)
@@ -118,6 +118,11 @@ void SyncPeriphery_StartFlash(uint8_t ledIndex,
                               uint8_t red, uint8_t green, uint8_t blue,
                               uint16_t durationMs)
 {
+    if (0u == initialized)
+    {
+        return;
+    }
+
     if (ledIndex >= LEDS_QUANTITY)
     {
         return;
@@ -139,6 +144,11 @@ void SyncPeriphery_StartFlash(uint8_t ledIndex,
 //! \brief Остановка всех вспышек
 void SyncPeriphery_StopAllFlashes(void)
 {
+    if (0u == initialized)
+    {
+        return;
+    }
+
     for (uint8_t index = 0u; index < SYNC_PERIPHERY_FLASH_COUNT_MAX; index++)
     {
         if (0u != flashes[index].active)
@@ -155,6 +165,11 @@ void SyncPeriphery_StopAllFlashes(void)
 //! \brief Проверка наличия активных вспышек
 uint8_t SyncPeriphery_HasActiveFlashes(void)
 {
+    if (0u == initialized)
+    {
+        return 0u;
+    }
+
     for (uint8_t index = 0u; index < SYNC_PERIPHERY_FLASH_COUNT_MAX; index++)
     {
         if (0u != flashes[index].active)
@@ -209,7 +224,8 @@ void SyncPeriphery_Update(void)
             continue;
         }
 
-        // Защита от деления на ноль
+        // Защита от деления на ноль (на случай прямого вызова StartFlash
+        // с durationMs = 0, что сейчас запрещено, но защита не помешает).
         if (pFlash->totalMs > 0u)
         {
             uint32_t brightness = ((uint32_t)pFlash->remainingMs * MAX_COMPONENT_VALUE) / pFlash->totalMs;
@@ -224,10 +240,21 @@ void SyncPeriphery_Update(void)
 }
 
 //! \brief Отклик «клик» (кнопка нажата)
+//! \note Устанавливает громкость клика в SYNC_PERIPHERY_CLICK_VOLUME_PERCENT
+//!       и НЕ восстанавливает её после окончания тона. Это глобальное
+//!       состояние маленького зуммера. При интеграции в игры — либо
+//!       убрать SetVolume, либо явно управлять громкостью из игры.
 void SyncPeriphery_Click(void)
 {
+    if (0u == initialized)
+    {
+        return;
+    }
+
     BuzzersDriver_SetVolume(BUZZER_SMALL, SYNC_PERIPHERY_CLICK_VOLUME_PERCENT);
-    BuzzersDriver_PlayTone(BUZZER_SMALL, 2000u, SYNC_PERIPHERY_CLICK_DURATION_MS);
+    BuzzersDriver_PlayTone(BUZZER_SMALL,
+                           SYNC_PERIPHERY_CLICK_FREQUENCY_HZ,
+                           SYNC_PERIPHERY_CLICK_DURATION_MS);
 
     for (uint8_t ledIndex = 0u; ledIndex < LEDS_QUANTITY; ledIndex++)
     {
@@ -242,6 +269,11 @@ void SyncPeriphery_Click(void)
 //! \brief Отклик «нота»
 void SyncPeriphery_PlayNote(Buzzer buzzer, uint16_t frequencyHz, uint16_t durationMs)
 {
+    if (0u == initialized)
+    {
+        return;
+    }
+
     BuzzersDriver_PlayTone(buzzer, frequencyHz, durationMs);
 
     if (0u == frequencyHz)
@@ -264,12 +296,22 @@ void SyncPeriphery_PlayNote(Buzzer buzzer, uint16_t frequencyHz, uint16_t durati
 //! \brief Остановка ноты
 void SyncPeriphery_StopNote(Buzzer buzzer)
 {
+    if (0u == initialized)
+    {
+        return;
+    }
+
     BuzzersDriver_Stop(buzzer);
 }
 
 //! \brief Отклик «успех»
 void SyncPeriphery_Success(void)
 {
+    if (0u == initialized)
+    {
+        return;
+    }
+
     BuzzersDriver_Success(BUZZER_SMALL);
 
     LedsEffectsParams params = { 0 };
@@ -293,6 +335,11 @@ void SyncPeriphery_Success(void)
 //! \brief Отклик «ошибка»
 void SyncPeriphery_Error(void)
 {
+    if (0u == initialized)
+    {
+        return;
+    }
+
     BuzzersDriver_Error(BUZZER_SMALL);
 
     for (uint8_t ledIndex = 0u; ledIndex < LEDS_QUANTITY; ledIndex++)
@@ -308,6 +355,11 @@ void SyncPeriphery_Error(void)
 //! \brief Отклик «попадание»
 void SyncPeriphery_Hit(void)
 {
+    if (0u == initialized)
+    {
+        return;
+    }
+
     BuzzersDriver_SetVolume(BUZZER_SMALL, SYNC_PERIPHERY_HIT_VOLUME_PERCENT);
     BuzzersDriver_PlayTone(BUZZER_SMALL,
                            SYNC_PERIPHERY_HIT_FREQUENCY_HZ,
@@ -326,6 +378,11 @@ void SyncPeriphery_Hit(void)
 //! \brief Отклик «промах»
 void SyncPeriphery_Miss(void)
 {
+    if (0u == initialized)
+    {
+        return;
+    }
+
     for (uint8_t ledIndex = 0u; ledIndex < LEDS_QUANTITY; ledIndex++)
     {
         SyncPeriphery_StartFlash(ledIndex,
