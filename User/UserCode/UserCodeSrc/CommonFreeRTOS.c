@@ -8,6 +8,13 @@
 
 //! \brief Создание задач FreeRTOS
 //! \return Статус создания задач FreeRTOS
+//! \note ButtonsProcessing временно отключён.
+//!       События кнопок обрабатываются внутри SyncPeripheryControl
+//!       (через ButtonsDriver_GetEvent). Это допустимо для теста.
+//!       При интеграции игр — либо включить ButtonsProcessing и убрать
+//!       опрос кнопок из SyncPeripheryControl, либо оставить одну задачу
+//!       обработки. Важно, чтобы события кнопок читала ТОЛЬКО ОДНА
+//!       задача (GetEvent атомарно очищает событие).
 BaseType_t CommonFreeRTOS_CreateTasks(void)
 {
     // Статус создания задач FreeRTOS

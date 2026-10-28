@@ -12,7 +12,9 @@
 #define SYNC_PERIPHERY_CONTROL_TASK_PRIORITY    (tskIDLE_PRIORITY + 2u)
 
 //! Размер стека задачи тестирования, слов
-#define SYNC_PERIPHERY_CONTROL_TASK_STACK_SIZE  128u
+//! \note Увеличен с 128 до 256: LedsEffects_Update, SyncPeriphery_Update и
+//!       LedsDriver_Show в сумме могут давать заметную глубину стека.
+#define SYNC_PERIPHERY_CONTROL_TASK_STACK_SIZE  256u
 
 //! Яркость LED в тестовом режиме, %
 #define SYNC_PERIPHERY_CONTROL_BRIGHTNESS       3u
